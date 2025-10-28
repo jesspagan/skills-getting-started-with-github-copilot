@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ? `<ul class="participants-list">${details.participants.map(participant => 
               `<li>
                 <span class="participant-email">${participant}</span>
-                <button class="delete-participant" onclick="unregisterParticipant('${name}', '${participant}')" title="Remove participant">
+                <button class="delete-participant" data-activity="${name}" data-email="${participant}" title="Remove participant">
                   ✖
                 </button>
               </li>`
@@ -59,6 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching activities:", error);
     }
   }
+
+  // Event delegation for delete participant buttons
+  activitiesList.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-participant")) {
+      const activityName = event.target.dataset.activity;
+      const email = event.target.dataset.email;
+      unregisterParticipant(activityName, email);
+    }
+  });
 
   // Function to unregister a participant
   async function unregisterParticipant(activityName, email) {
@@ -95,9 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error unregistering:", error);
     }
   }
-
-  // Make unregisterParticipant available globally
-  window.unregisterParticipant = unregisterParticipant;
 
   // Handle form submission
   signupForm.addEventListener("submit", async (event) => {
