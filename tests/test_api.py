@@ -2,7 +2,6 @@
 Test cases for the Mergington High School API endpoints.
 """
 
-import pytest
 from fastapi.testclient import TestClient
 
 
