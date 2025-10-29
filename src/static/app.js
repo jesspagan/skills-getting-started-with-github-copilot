@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ? `<ul class="participants-list">${details.participants.map(participant => 
               `<li>
                 <span class="participant-email">${participant}</span>
-                <button class="delete-participant" data-activity="${name}" data-email="${participant}" title="Remove participant">
+                <button class="delete-participant" data-action="delete-participant" data-activity="${name}" data-email="${participant}" title="Remove participant">
                   ✖
                 </button>
               </li>`
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event delegation for delete participant buttons
   activitiesList.addEventListener("click", (event) => {
-    if (event.target.classList.contains("delete-participant")) {
+    if (event.target.dataset.action === "delete-participant") {
       const activityName = event.target.dataset.activity;
       const email = event.target.dataset.email;
       unregisterParticipant(activityName, email);
